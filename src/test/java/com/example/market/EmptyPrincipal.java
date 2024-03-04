@@ -1,5 +1,6 @@
 package com.example.market;
 import java.security.Principal;
+import java.util.Map;
 
 public class EmptyPrincipal implements Principal {
     @Override

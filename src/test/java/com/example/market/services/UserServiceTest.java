@@ -4,6 +4,7 @@ import com.example.market.EmptyPrincipal;
 import com.example.market.models.User;
 import com.example.market.models.enums.Role;
 import com.example.market.repositories.UserRepository;
+import freemarker.template.EmptyMap;
 import org.hamcrest.CoreMatchers;
 import org.junit.Assert;
 import org.junit.jupiter.api.Test;
@@ -16,10 +17,7 @@ import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.test.context.junit4.SpringRunner;
 
-import java.util.Collection;
-import java.util.Collections;
-import java.util.Map;
-import java.util.Optional;
+import java.util.*;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -94,6 +92,7 @@ class UserServiceTest {
     @Test
     public void changeUserRoles() {
         User user = new User();
+        userService.changeUserRoles(user,new EmptyMap());
         Mockito.verify(userRepository, Mockito.times(1)).save(user);
     }
     @Test

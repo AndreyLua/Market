@@ -15,18 +15,13 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.mock.web.MockMultipartFile;
 
-import org.springframework.web.multipart.MultipartFile;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.test.context.junit4.SpringRunner;
-import org.springframework.web.multipart.MultipartFile;
 
-import java.io.File;
+import java.io.Console;
+import java.util.*;
 import java.io.IOException;
-import java.io.InputStream;
-import java.security.Principal;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
+import java.util.stream.Collectors;
+
 @SpringBootTest
 @RunWith(SpringRunner.class)
 class ProductServiceTest {
@@ -39,14 +34,18 @@ class ProductServiceTest {
 
     @Test
     void listProductsNull() {
-        productService.listProducts(null);
+        List<Product> productList = productService.listProducts(null);
         Mockito.verify(productRepository, Mockito.times(1)).findAll();
+        Assert.assertNotNull(productList);
+        Assert.assertEquals(0, productList.size());
     }
 
     @Test
     void listProductsTestNotNull() {
-        productService.listProducts("testTitle");
+        List<Product> productList = productService.listProducts("testTitle");
         Mockito.verify(productRepository, Mockito.times(1)).findByTitle("testTitle");
+        Assert.assertNotNull(productList);
+        Assert.assertEquals(0, productList.size());
     }
 
     @Test
@@ -66,6 +65,7 @@ class ProductServiceTest {
         Mockito.doReturn(newProduct)
                 .when(productRepository)
                 .save(product);
+
         MockMultipartFile file1 = new MockMultipartFile("filename", new byte[0]);
         productService.saveProduct(new EmptyPrincipal(), product, file1, file1, file1);
 
@@ -74,8 +74,23 @@ class ProductServiceTest {
 
     @Test
     void getUserByPrincipalNull() {
+
+        class  Employee{
+            public int s()
+            {
+                return  0;
+            }
+        }
+
+        List<Employee> employees = new ArrayList<>();
+
+        employees.add(new Employee());
+
+        employees.filter(Employee::s).collect(Collectors.toUnmodifiableList());
+        employees.stream().map(Employee::s).collect(Collectors.toList());
+
         User user = productService.getUserByPrincipal(null);
-        Assert.assertTrue(user.getEmail() == null);
+        Assert.assertNull(user.getEmail());
     }
 
     @Test
