@@ -86,7 +86,6 @@ class ProductServiceTest {
 
         employees.add(new Employee());
 
-        employees.filter(Employee::s).collect(Collectors.toUnmodifiableList());
         employees.stream().map(Employee::s).collect(Collectors.toList());
 
         User user = productService.getUserByPrincipal(null);
